@@ -1,0 +1,45 @@
+#overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.username-box {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.username-box input {
+  padding: 10px;
+  margin-top: 10px;
+  width: 100%;
+  border: 1px solid #ccc;
+}
+
+.username-box button {
+  margin-top: 10px;
+  padding: 10px;
+  width: 100%;
+  background: #2b8a3e;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+#messages div {
+  margin: 5px 0;
+  padding: 10px;
+  background: #e0e0e0;
+  border-radius: 10px;
+}
+
+#messages .mine {
+  background: #c7ffc7;
+  text-align: right;
+}
