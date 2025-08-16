@@ -29,3 +29,10 @@ const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
+socket.on('chat message', (msg) => {
+  io.emit('chat message', {
+    user: msg.user,
+    text: msg.text,
+    profilePic: msg.profilePic || null
+  });
+});

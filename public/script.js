@@ -1,14 +1,32 @@
 const socket = io();
 let username = "";
+let profilePicData = "";
 
 function setUsername() {
-  const input = document.getElementById("usernameInput");
-  username = input.value.trim();
-  if (username !== "") {
-    document.getElementById("overlay").style.display = "none";
-    document.querySelector(".chat-container").style.display = "block";
-    socket.emit("join", username);
+  const nameInput = document.getElementById("usernameInput");
+  const picInput = document.getElementById("picInput");
+
+  username = nameInput.value.trim();
+
+  if (!username) return;
+
+  // Read image file
+  if (picInput.files.length > 0) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      profilePicData = e.target.result;
+      completeLogin();
+    };
+    reader.readAsDataURL(picInput.files[0]);
+  } else {
+    completeLogin();
   }
+}
+
+function completeLogin() {
+  document.getElementById("overlay").style.display = "none";
+  document.querySelector(".chat-container").style.display = "block";
+  socket.emit("join", { username, profilePic: profilePicData });
 }
 
 const form = document.getElementById("form");
@@ -20,16 +38,26 @@ form.addEventListener("submit", (e) => {
   if (input.value && username) {
     socket.emit("chat message", {
       user: username,
-      text: input.value
+      text: input.value,
+      profilePic: profilePicData
     });
-    input.value = "";
+    input.value = '';
   }
 });
 
 socket.on("chat message", (msg) => {
-  const item = document.createElement("div");
-  item.textContent = `${msg.user}: ${msg.text}`;
-  item.className = msg.user === username ? "mine" : "";
-  messages.appendChild(item);
+  const wrapper = document.createElement("div");
+  wrapper.classList.add("message");
+  if (msg.user === username) wrapper.classList.add("mine");
+
+  const img = document.createElement("img");
+  img.src = msg.profilePic || "https://placehold.co/35x35"; // fallback avatar
+
+  const text = document.createElement("div");
+  text.textContent = `${msg.user}: ${msg.text}`;
+
+  wrapper.appendChild(img);
+  wrapper.appendChild(text);
+  messages.appendChild(wrapper);
   messages.scrollTop = messages.scrollHeight;
 });
