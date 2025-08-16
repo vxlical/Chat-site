@@ -37,3 +37,14 @@ const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+io.on('connection', socket => {
+  socket.on('webrtc-offer', offer => {
+    socket.broadcast.emit('webrtc-offer', offer);
+  });
+  socket.on('webrtc-answer', answer => {
+    socket.broadcast.emit('webrtc-answer', answer);
+  });
+  socket.on('webrtc-candidate', candidate => {
+    socket.broadcast.emit('webrtc-candidate', candidate);
+  });
+});
