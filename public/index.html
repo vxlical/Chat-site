@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Chat App</title>
-  <link rel="stylesheet" href="style.css"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>General Chat</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Join Prompt -->
-  <div id="overlay">
-    <div class="username-box">
-      <h2>Enter your username</h2>
-      <input type="text" id="usernameInput" placeholder="Username" />
-      <label for="picInput">Select profile picture (optional):</label><br/>
-      <input type="file" id="picInput" accept="image/*" /><br/>
-      <button onclick="setUsername()">Join Chat</button>
-    </div>
+  <!-- Join screen -->
+  <div id="join-screen">
+    <h2>Welcome to General Chat</h2>
+    <input type="text" id="username" placeholder="Enter your name" />
+    <label for="profilePic">Choose profile picture (optional)</label>
+    <input type="file" id="profilePic" accept="image/*" />
+    <button onclick="enterChat()">Enter Chat</button>
   </div>
 
-  <!-- Chat App -->
-  <div class="chat-container" style="display: none;">
-    <div id="messages"></div>
-    <form id="form">
-      <input id="input" autocomplete="off" placeholder="Type your message..." />
+  <!-- Chat screen -->
+  <div id="chat-screen" class="hidden">
+    <div id="chat-header">
+      <h2>General Chat</h2>
+    </div>
+    <div id="chat-messages"></div>
+    <form id="chat-form">
+      <input type="text" id="chat-input" placeholder="Type your message..." autocomplete="off">
       <button>Send</button>
     </form>
   </div>

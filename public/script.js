@@ -1,63 +1,77 @@
 const socket = io();
-let username = "";
-let profilePicData = "";
 
-function setUsername() {
-  const nameInput = document.getElementById("usernameInput");
-  const picInput = document.getElementById("picInput");
+let user = {
+  username: '',
+  profilePic: ''
+};
 
-  username = nameInput.value.trim();
+function enterChat() {
+  const usernameInput = document.getElementById("username");
+  const fileInput = document.getElementById("profilePic");
 
-  if (!username) return;
+  const username = usernameInput.value.trim();
+  if (!username) return alert("Please enter a username.");
 
-  // Read image file
-  if (picInput.files.length > 0) {
+  user.username = username;
+
+  if (fileInput.files.length > 0) {
     const reader = new FileReader();
-    reader.onload = function (e) {
-      profilePicData = e.target.result;
-      completeLogin();
+    reader.onload = () => {
+      user.profilePic = reader.result;
+      finalizeJoin();
     };
-    reader.readAsDataURL(picInput.files[0]);
+    reader.readAsDataURL(fileInput.files[0]);
   } else {
-    completeLogin();
+    finalizeJoin();
   }
 }
 
-function completeLogin() {
-  document.getElementById("overlay").style.display = "none";
-  document.querySelector(".chat-container").style.display = "block";
-  socket.emit("join", { username, profilePic: profilePicData });
+function finalizeJoin() {
+  document.getElementById("join-screen").classList.add("hidden");
+  document.getElementById("chat-screen").classList.remove("hidden");
+
+  socket.emit("join", user);
 }
 
-const form = document.getElementById("form");
-const input = document.getElementById("input");
-const messages = document.getElementById("messages");
+const form = document.getElementById("chat-form");
+const input = document.getElementById("chat-input");
+const messages = document.getElementById("chat-messages");
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  if (input.value && username) {
-    socket.emit("chat message", {
-      user: username,
-      text: input.value,
-      profilePic: profilePicData
-    });
-    input.value = '';
-  }
+  const text = input.value.trim();
+  if (!text) return;
+
+  socket.emit("chat message", {
+    user,
+    text
+  });
+
+  input.value = '';
 });
 
-socket.on("chat message", (msg) => {
-  const wrapper = document.createElement("div");
-  wrapper.classList.add("message");
-  if (msg.user === username) wrapper.classList.add("mine");
+socket.on("chat message", ({ user, text }) => {
+  const msg = document.createElement("div");
+  msg.className = "message";
 
-  const img = document.createElement("img");
-  img.src = msg.profilePic || "https://placehold.co/35x35"; // fallback avatar
+  const avatar = document.createElement("img");
+  avatar.src = user.profilePic || "https://placehold.co/40x40";
 
-  const text = document.createElement("div");
-  text.textContent = `${msg.user}: ${msg.text}`;
+  const content = document.createElement("div");
+  content.className = "message-content";
 
-  wrapper.appendChild(img);
-  wrapper.appendChild(text);
-  messages.appendChild(wrapper);
+  const username = document.createElement("div");
+  username.className = "message-username";
+  username.textContent = user.username;
+
+  const messageText = document.createElement("div");
+  messageText.textContent = text;
+
+  content.appendChild(username);
+  content.appendChild(messageText);
+  msg.appendChild(avatar);
+  msg.appendChild(content);
+
+  messages.appendChild(msg);
   messages.scrollTop = messages.scrollHeight;
 });

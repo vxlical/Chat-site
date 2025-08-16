@@ -9,15 +9,13 @@ const io = new Server(server);
 app.use(express.static('public'));
 
 io.on('connection', (socket) => {
-  socket.on('join', (username) => {
-    socket.username = username;
+  socket.on('join', (user) => {
+    socket.username = user.username;
+    socket.profilePic = user.profilePic || '';
   });
 
   socket.on('chat message', (msg) => {
-    io.emit('chat message', {
-      user: msg.user,
-      text: msg.text
-    });
+    io.emit('chat message', msg);
   });
 
   socket.on('disconnect', () => {
@@ -28,11 +26,4 @@ io.on('connection', (socket) => {
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
-});
-socket.on('chat message', (msg) => {
-  io.emit('chat message', {
-    user: msg.user,
-    text: msg.text,
-    profilePic: msg.profilePic || null
-  });
 });
