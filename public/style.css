@@ -1,3 +1,13 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f0f0f0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
 #overlay {
   position: fixed;
   inset: 0;
@@ -15,17 +25,36 @@
   text-align: center;
 }
 
-.username-box input {
+.chat-container {
+  width: 90%;
+  max-width: 500px;
+  background: white;
   padding: 10px;
-  margin-top: 10px;
-  width: 100%;
-  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
 }
 
-.username-box button {
-  margin-top: 10px;
+#messages {
+  height: 300px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+#form {
+  display: flex;
+}
+
+#input {
+  flex: 1;
   padding: 10px;
-  width: 100%;
+  border: 1px solid #ccc;
+  border-right: none;
+}
+
+button {
+  padding: 10px;
   background: #2b8a3e;
   color: white;
   border: none;
