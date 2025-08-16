@@ -1,29 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF‑8" />
-  <meta name="viewport" content="width=device-width,initial‑scale=1" />
-  <title>Fancy Chat</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="/socket.io/socket.io.js" defer></script>
-  <script src="script.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chat App</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <button id="callBtn">Start Call</button>
-<button id="hangupBtn" style="display:none;">Hang Up</button>
+  <!-- Join Prompt -->
   <div id="overlay">
     <div class="username-box">
-      <h2>Pick Your Username</h2>
+      <h2>Enter your username</h2>
       <input type="text" id="usernameInput" placeholder="Username" />
-      <button onclick="setUsername()">Enter</button>
+      <button onclick="setUsername()">Join Chat</button>
     </div>
   </div>
-  <div class="chat-container">
+
+  <!-- Chat App -->
+  <div class="chat-container" style="display: none;">
     <div id="messages"></div>
     <form id="form">
-      <input id="input" autocomplete="off" placeholder="Type your message…" />
+      <input id="input" autocomplete="off" placeholder="Type your message..." />
       <button>Send</button>
     </form>
   </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

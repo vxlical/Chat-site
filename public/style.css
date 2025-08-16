@@ -1,218 +1,74 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-
-:root {
-  --bg: #0d0d15;
-  --accent: #00ffe1;
-  --glass: rgba(255, 255, 255, 0.15);
-  --glass-shadow: rgba(0, 0, 0, 0.3);
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Poppins', sans-serif;
-}
-
 body {
-  background: var(--bg);
-  color: white;
-  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background: #f0f0f0;
+  margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
+  height: 100vh;
 }
 
 .chat-container {
-  width: 100%;
-  max-width: 450px;
-  height: 90vh;
-  display: flex;
-  flex-direction: column;
-  background: var(--glass);
-  backdrop-filter: blur(12px);
-  border-radius: 20px;
-  box-shadow: 0 8px 32px var(--glass-shadow);
-  overflow: hidden;
-  position: relative;
+  width: 90%;
+  max-width: 500px;
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
 }
 
 #messages {
-  flex: 1;
+  height: 300px;
   overflow-y: auto;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  padding: 5px;
 }
 
-form {
+#form {
   display: flex;
-  border-top: 1px solid var(--glass);
-  padding: 0.5rem;
-  background-color: rgba(255, 255, 255, 0.05);
 }
 
-form input {
+#input {
   flex: 1;
-  padding: 0.8rem;
-  background: transparent;
-  border: none;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-right: none;
+}
+
+button {
+  padding: 10px;
+  background: #2b8a3e;
   color: white;
-  font-size: 1rem;
-}
-
-form button {
-  padding: 0.8rem 1.2rem;
-  background: var(--accent);
   border: none;
-  color: #0d0d15;
-  font-weight: 600;
   cursor: pointer;
-  font-size: 1rem;
 }
 
-form button:hover {
-  background: #00d4b1;
+#messages div {
+  margin: 5px 0;
+  padding: 10px;
+  background: #e0e0e0;
+  border-radius: 10px;
 }
 
-.message {
-  align-self: flex-start;
-  max-width: 85%;
-  background: var(--glass);
-  padding: 0.7rem 1rem;
-  border-radius: 15px;
-  word-wrap: break-word;
-  animation: fadeIn 0.4s ease;
-}
-
-.message.mine {
-  align-self: flex-end;
-  background: var(--accent);
-  color: #0d0d15;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(5px); }
-  to { opacity: 1; transform: translateY(0); }
+#messages .mine {
+  background: #c7ffc7;
+  text-align: right;
 }
 
 #overlay {
   position: fixed;
   inset: 0;
-  background: rgba(13,13,21,0.85);
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10;
-  padding: 1rem;
+  z-index: 1000;
 }
 
 .username-box {
-  background: var(--glass);
-  padding: 2rem;
-  border-radius: 15px;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
   text-align: center;
-  width: 100%;
-  max-width: 400px;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 8px 20px var(--glass-shadow);
-}
-
-.username-box h2 {
-  margin-bottom: 1rem;
-}
-
-.username-box input {
-  width: 100%;
-  padding: 0.8rem;
-  border: none;
-  font-size: 1rem;
-  margin-bottom: 1rem;
-}
-
-.username-box button {
-  width: 100%;
-  padding: 0.8rem;
-  background: var(--accent);
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
-  color: var(--bg);
-  font-size: 1rem;
-}
-
-/* === RESPONSIVE TWEAKS === */
-@media (max-width: 600px) {
-  .chat-container {
-    height: 95vh;
-    max-width: 100%;
-    border-radius: 12px;
-  }
-
-  form input,
-  form button {
-    font-size: 0.9rem;
-    padding: 0.6rem;
-  }
-
-  .message {
-    font-size: 0.9rem;
-  }
-
-  .username-box {
-    padding: 1.5rem;
-  }
-}
-
-/*... existing styles above ...*/
-
-/* === Enhanced Responsive Adjustments === */
-@media (max-width: 600px) {
-  .chat-container {
-    height: 94vh;
-    margin: 0 auto;
-    border-radius: 10px;
-  }
-
-  #messages {
-    padding: 0.8rem;
-  }
-
-  .message {
-    max-width: 90%;
-    font-size: 0.88rem;
-  }
-
-  form {
-    padding: 0.4rem;
-  }
-
-  form input {
-    font-size: 0.88rem;
-  }
-
-  form button {
-    font-size: 0.88rem;
-  }
-
-  .username-box {
-    width: 100%;
-    margin: 0 0.5rem;
-    padding: 1rem;
-  }
-
-  #overlay {
-    padding: 0.5rem;
-  }
-}
-#callBtn, #hangupBtn {
-  margin: 0.5rem;
-  padding: 0.8rem 1rem;
-  background: var(--accent);
-  border: none;
-  color: #0d0d15;
-  cursor: pointer;
-  border-radius: 8px;
 }
